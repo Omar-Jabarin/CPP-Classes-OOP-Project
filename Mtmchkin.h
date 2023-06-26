@@ -1,8 +1,19 @@
 #ifndef MTMCHKIN_H_
 #define MTMCHKIN_H_
 
-class Mtmchkin{
+#include <vector>
+#include <memory>
+#include <iostream>
+#include "Leaderboard.h"
+#include "Cards/Card.h"
 
+#define LOWER_PLAYER_LIMIT 2
+#define UPPER_PLAYER_LIMIT 6
+#define MIN_DECK_SIZE 5
+
+
+
+class Mtmchkin{
 public:
     
     /*
@@ -13,6 +24,10 @@ public:
     *      A new instance of Mtmchkin.
     */
     explicit Mtmchkin(const std::string &fileName);
+    Mtmchkin& operator=(const Mtmchkin& other)=delete;
+    Mtmchkin(const Mtmchkin&)=delete;
+    ~Mtmchkin()=default;
+
     
     /*
     * Play the next Round of the game - according to the instruction in the exercise document.
@@ -46,7 +61,17 @@ public:
     *          int - number of rounds played
     */
     int getNumberOfRounds() const;
+
+private:
+    std::vector<std::unique_ptr<Card>> m_deck;
+    int m_numberOfPlayers;
+    std::vector<std::shared_ptr<Player>> m_players;
+    Leaderboard m_leaderboard;
+    int m_numberOfRounds;
+
+    void moveFirstCardToEnd();
 };
+
 
 
 
