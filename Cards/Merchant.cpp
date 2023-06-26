@@ -3,41 +3,51 @@
 //
 
 #include "Merchant.h"
+#define BUFF_TRADE 2
+#define POTION_TRADE 1
+#define NO_TRADE 0
+#define AVAILABLE_DEALS 2
+#define POTION_COST 5
+#define POTION_STRENGTH 1
+#define BUFF_COST 10
+#define BUFF_STRENGTH 1
+
 
 int Merchant::getRequest() {
-    std::cout << "Enter input: ";
     std::string buffer;
     while (true) {
         try {
             std::getline(std::cin, buffer);
             int i = std::stoi(buffer);
-            if (0 <= i && i <= 2) {
+            if (0 <= i && i <= AVAILABLE_DEALS) {
                 return i;
             }
         } catch (const std::invalid_argument&) {}
-        std::cout << "Invalid output - enter again: ";
+        printInvalidInput();
     }
 }
 
 void Merchant::apply(Player& player) {
+    printMerchantInitialMessageForInteractiveEncounter(std::cout,player.getName(),player.getCoins());
     switch (getRequest()) {
-        case 0:
-            std::cout << "Didn't buy anything." << std::endl;
+        case NO_TRADE:
             return;
-        case 1:
-            if (player.pay(5)) {
-                player.heal(1);
-                std::cout << "Bought 1hp for 5 coins" << std::endl;
+        case POTION_TRADE:
+            if (player.pay(POTION_COST)) {
+                player.heal(POTION_STRENGTH);
+                printMerchantSummary(std::cout, player.getName(),POTION_TRADE, POTION_COST);
             } else {
-                std::cout << "Not enough coins!" << std::endl;
+                printMerchantInsufficientCoins(std::cout);
+                printMerchantSummary(std::cout,player.getName(),NO_TRADE,NO_TRADE);
             }
             return;
-        case 2:
-            if (player.pay(10)) {
-                player.buff(1);
-                std::cout << "Bought 1 force buff for 10 coins" << std::endl;
+        case BUFF_TRADE:
+            if (player.pay(BUFF_COST)) {
+                player.buff(BUFF_STRENGTH);
+                printMerchantSummary(std::cout,player.getName(),BUFF_TRADE,BUFF_COST);
+
             } else {
-                std::cout << "Not enough coins!" << std::endl;
+                printMerchantInsufficientCoins(std::cout);
             }
             return;
     }

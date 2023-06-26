@@ -7,6 +7,10 @@
 
 void Barfight::apply(Player& player) {
     if (!dynamic_cast<Warrior*>(&player)) {
-        player.damage(8);
+        printBarfightMessage(false);
+        player.damage(10);
+    }
+    else{
+        printBarfightMessage(true);
     }
 }

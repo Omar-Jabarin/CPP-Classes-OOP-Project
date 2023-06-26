@@ -21,6 +21,9 @@ int Player::getLevel() const {
 
 void Player::buff(int points) {
     m_stats.force += points;
+    if (m_stats.force < 0){
+        m_stats.force = 0;
+    }
 }
 
 void Player::heal(int points) {

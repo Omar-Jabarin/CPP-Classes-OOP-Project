@@ -78,7 +78,7 @@ void printMerchantInsufficientCoins(std::ostream &os);
  * @param os - The ostream.
  * @param force - The monster's force.
  * @param damage - The monster's damage.
- * @param coins - The monster's loot.
+ * @param coins - The monster's m_loot.
  * @return
  *      void
  */

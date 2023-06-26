@@ -96,8 +96,9 @@ static std::pair<std::string,std::string> getPlayerDetails(){
     std::string playerName;
     std::string playerClass;
     std::string input;
+
+    printInsertPlayerMessage();
     while (true) {
-        printInsertPlayerMessage();
         std::getline(std::cin, input);
         std::vector <std::string> words;
         std::string word;

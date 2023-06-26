@@ -8,6 +8,10 @@
 
 void Mana::apply(Player& player) {
     if (dynamic_cast<Healer*>(&player)) {
+        printManaMessage(true);
         player.heal(10);
+    }
+    else {
+        printManaMessage(false);
     }
 }
