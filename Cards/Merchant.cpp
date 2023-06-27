@@ -22,7 +22,7 @@ int Merchant::getRequest() {
             if (0 <= i && i <= AVAILABLE_DEALS) {
                 return i;
             }
-        } catch (const std::invalid_argument&) {}
+        } catch (const std::exception&) {}
         printInvalidInput();
     }
 }
@@ -31,14 +31,16 @@ void Merchant::apply(Player& player) {
     printMerchantInitialMessageForInteractiveEncounter(std::cout,player.getName(),player.getCoins());
     switch (getRequest()) {
         case NO_TRADE:
+            printMerchantSummary(std::cout, player.getName(), NO_TRADE, NO_TRADE);
             return;
+
         case POTION_TRADE:
             if (player.pay(POTION_COST)) {
                 player.heal(POTION_STRENGTH);
                 printMerchantSummary(std::cout, player.getName(),POTION_TRADE, POTION_COST);
             } else {
                 printMerchantInsufficientCoins(std::cout);
-                printMerchantSummary(std::cout,player.getName(),NO_TRADE,NO_TRADE);
+                printMerchantSummary(std::cout,player.getName(),POTION_TRADE,NO_TRADE);
             }
             return;
         case BUFF_TRADE:
@@ -48,6 +50,7 @@ void Merchant::apply(Player& player) {
 
             } else {
                 printMerchantInsufficientCoins(std::cout);
+                printMerchantSummary(std::cout,player.getName(),BUFF_TRADE,NO_TRADE);
             }
             return;
     }
