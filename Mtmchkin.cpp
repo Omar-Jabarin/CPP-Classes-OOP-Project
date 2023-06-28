@@ -24,11 +24,27 @@
 #include "Players/Warrior.h"
 #include "Exception.h"
 
-static bool isValidNumber(const std::string& input){
-    if (input.size()==0){
-        return false;
+
+std::string& myTrim(std::string& str) {
+    size_t start = 0, end = str.size() - 1;
+
+    while ((start < str.size()) && (str[start] == ' ' || str[start] == '\t')) {
+        ++start;
+    }
+    while ((end > start) && (str[end] == ' ' || str[end] == '\t')) {
+        --end;
     }
 
+    str = std::string(str.begin() + start, str.begin() + end + 1);
+
+    return str;
+}
+
+
+static bool isValidNumber(std::string& input){
+    if (input.empty()){
+        return false;
+    }
     for (char c: input){
         if (c < '0' || c > '9'){
             return false;
@@ -58,8 +74,8 @@ static int getNumberOfPlayers(){
         }
         input = result;
 
-        if (isValidNumber(input)){
-            return std::stoi(input);
+        if (isValidNumber(result)){
+            return std::stoi(result);
         }
         else {
             printInvalidTeamSize();
@@ -200,19 +216,30 @@ static std::vector<std::unique_ptr<Card>> welcomeAndGetDeckFromFile(const std::s
     std::vector<std::unique_ptr<Card>> deck;
     std::ifstream deckFile(fileName);
     int currentLineNum=1;
+    int emptyLineNum=0;
     std::string currentLine;
-
     if (!deckFile){
         throw DeckFileNotFound("Deck File Error: File not found");
     }
     while (std::getline(deckFile, currentLine)){
-        try {
-            deck.push_back(createCard(currentLine));
-            currentLineNum++;
+        myTrim(currentLine);
+        if (emptyLineNum == 0 && currentLine.empty()){
+            emptyLineNum=currentLineNum;
         }
-        catch (std::invalid_argument&){
+        else if(!currentLine.empty()){
+            if(emptyLineNum != 0){
             throw DeckFileFormatError("Deck File Error: File format error in line "
-                                        +std::to_string(currentLineNum));
+                                        +std::to_string(emptyLineNum));
+            }
+
+            try {
+                deck.push_back(createCard(currentLine));
+                currentLineNum++;
+            }
+            catch (std::invalid_argument&){
+                throw DeckFileFormatError("Deck File Error: File format error in line "
+                                          +std::to_string(currentLineNum));
+            }
         }
     }
     if (currentLineNum<=MIN_DECK_SIZE){
