@@ -6,10 +6,14 @@
 #define EX4_GREMLIN_H
 #include "Card.h"
 
+#define GREMLIN_LOOT 2
+#define GREMLIN_POWER 5
+#define GREMLIN_DAMAGE 10
+
 class Gremlin : public BattleCard {
 
 public:
-    Gremlin() : BattleCard(2, 5 , 10){}
+    Gremlin() : BattleCard(GREMLIN_LOOT, GREMLIN_POWER , GREMLIN_DAMAGE){}
 
     void applyDefeat(Player&) override;
     std::string getName() const override{ return "Gremlin"; }

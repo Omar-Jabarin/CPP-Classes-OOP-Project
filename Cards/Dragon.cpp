@@ -4,7 +4,6 @@
 
 #include "Dragon.h"
 
-#define INFINITY 9001
 
 void Dragon::applyDefeat(Player& player) {
     printLossBattle(player.getName(),getName());

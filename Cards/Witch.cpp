@@ -6,6 +6,6 @@
 
 void Witch::applyDefeat(Player& player) {
     printLossBattle(player.getName(),getName());
-    player.damage(10);
-    player.buff(-1);
+    player.damage(WITCH_DAMAGE);
+    player.buff(WITCH_DEBUFF);
 }

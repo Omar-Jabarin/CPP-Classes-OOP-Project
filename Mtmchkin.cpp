@@ -34,9 +34,13 @@ static bool isValidNumber(const std::string& input){
             return false;
         }
     }
-
-    int number=std::stoi(input);
-    return ((number >= LOWER_PLAYER_LIMIT) && (number <= UPPER_PLAYER_LIMIT));
+    try {
+        int number = std::stoi(input);
+        return ((number >= LOWER_PLAYER_LIMIT) && (number <= UPPER_PLAYER_LIMIT));
+    }
+    catch(std::exception&){
+        return false;
+    }
 }
 
 static int getNumberOfPlayers(){

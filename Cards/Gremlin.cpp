@@ -6,5 +6,5 @@
 
 void Gremlin::applyDefeat(Player& player) {
     printLossBattle(player.getName(),getName());
-    player.damage(10);
+    player.damage(GREMLIN_DAMAGE);
 }
