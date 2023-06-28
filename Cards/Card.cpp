@@ -8,7 +8,7 @@ void BattleCard::apply(Player& player) {
     playerWinsFight(player) ? applyVictory(player) : applyDefeat(player);
 }
 
-bool BattleCard::playerWinsFight(Player& player) {
+bool BattleCard::playerWinsFight(Player& player) const {
     return (player.getAttackStrength() >= this->m_power);
 }
 

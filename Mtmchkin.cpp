@@ -25,7 +25,7 @@
 #include "Exception.h"
 
 
-std::string& myTrim(std::string& str) {
+static std::string& myTrim(std::string& str) {
     size_t start = 0, end = str.size() - 1;
 
     while ((start < str.size()) && (str[start] == ' ' || str[start] == '\t')) {
@@ -65,17 +65,9 @@ static int getNumberOfPlayers(){
     while(true){
         printEnterTeamSizeMessage();
         std::getline(std::cin, input);
-
-        std::string result;
-        for (char c : input) { //delete whitespace
-            if (c != ' ') {
-                result += c;
-            }
-        }
-        input = result;
-
-        if (isValidNumber(result)){
-            return std::stoi(result);
+        myTrim(input);
+        if (isValidNumber(input)){
+            return std::stoi(input);
         }
         else {
             printInvalidTeamSize();
@@ -123,7 +115,7 @@ static std::pair<std::string,std::string> getPlayerDetails(){
         std::vector <std::string> words;
         std::string word;
         for (char c: input) {
-            if (c == ' ') {
+            if ((c == ' ') || (c == '\t')) {
                 if (!word.empty()) {
                     words.push_back(word);
                     word.clear();

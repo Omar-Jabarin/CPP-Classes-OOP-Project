@@ -8,7 +8,7 @@
 
 class Healer : public Player {
 public:
-    explicit Healer(std::string name, int hp = 100);
+    explicit Healer(std::string name, int hp = DEFAULT_HP);
     void heal(int points) override;
     std::string getJob() const override { return "Healer"; }
 };

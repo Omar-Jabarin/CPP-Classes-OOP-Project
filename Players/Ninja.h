@@ -10,7 +10,7 @@
 
 class Ninja : public Player {
 public:
-    explicit Ninja(std::string name, int hp = 100);
+    explicit Ninja(std::string name, int hp = DEFAULT_HP);
     void addCoins(int coins) override;
     std::string getJob() const override { return "Ninja"; }
 };

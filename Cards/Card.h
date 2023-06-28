@@ -21,7 +21,7 @@ protected:
     BattleCard(int loot, int power, int damage);
 public:
     void apply(Player& player) override;
-    bool playerWinsFight(Player& player);
+    bool playerWinsFight(Player& player) const;
     virtual void applyVictory(Player&);
     virtual void applyDefeat(Player&)=0;
     void printCard(std::ostream& out) const override;

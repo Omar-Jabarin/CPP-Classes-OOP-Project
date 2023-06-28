@@ -2,6 +2,7 @@
 #define PROVIDED_PLAYER_H
 
 #define MAX_LEVEL 10
+#define DEFAULT_HP 100
 
 #include <string>
 
@@ -19,7 +20,7 @@ protected:
     PlayerStats m_stats;
 
 public:
-    explicit Player(std::string name, int hp = 100);
+    explicit Player(std::string name, int hp = DEFAULT_HP);
 
     void levelUp();
 

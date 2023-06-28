@@ -8,7 +8,7 @@
 
 class Warrior : public Player {
 public:
-   explicit Warrior(std::string name, int hp = 100);
+   explicit Warrior(std::string name, int hp = DEFAULT_HP);
 
     std::string getJob() const override { return "Warrior"; }
     int getAttackStrength() const override;
